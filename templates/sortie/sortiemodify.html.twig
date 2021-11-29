@@ -1,0 +1,28 @@
+{% extends 'base.html.twig'%}
+{% block main %}
+    <div class="container">
+        <h1>Modifier "{{ sortie.nom }}"</h1>
+        <div class="row align-items-center">
+            <div class="col">
+
+                {{ form_start(sortieForm) }}
+                {{ form_widget(sortieForm) }}
+                <button class="btn btn-primary" type="submit">Enregistrer</button>
+                {% if sortie.statut.id == '6'%}
+                <button class="btn btn-success" type="submit" name="publication">Publier cette sortie</button>
+                {% endif %}
+                <a class="btn btn-danger" href="{{ path('sortie_suppression', {'id': sortie.id}) }}">Supprimer cette sortie</a>
+                <button class="btn btn-warning" type="submit" onclick = "history.back()">Annuler</button>
+                {{ form_end(sortieForm) }}
+
+
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}
+            {% block title %}
+                {{ parent() }} | Modifier une sortie
+            {% endblock %}

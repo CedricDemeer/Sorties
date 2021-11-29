@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+
+    <h3>Vous voulez modifier le nom du campus : "{{ campus.nom }}" ?</h3>
+
+    <form>
+        <input type="text" name="nom-campus" value="{{ campus.nom }}">
+        <button type="submit" class="btn btn-success" name="modif-campus">Modifier ce campus !</button>
+    </form>
+
+    <a type="submit" href="{{ path('campus') }}" class="btn btn-danger">Non ! Je me suis égaré·e</a>
+
+{% endblock %}
+{% block title %}
+    {{ parent() }} | Campus Modif
+{% endblock %}

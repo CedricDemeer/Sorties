@@ -1,0 +1,26 @@
+{% extends 'base.html.twig'%}
+{% block main %}
+    <div class="container">
+        <h1>Supprimer une sortie</h1>
+        <div class="row align-items-center">
+            <div class="col">
+                Nom de la sortie : {{ sortie.nom }}<br>
+                Date de la sortie : {{ sortie.dateHeureDebut | date('d/m/Y') }}<br>
+                Campus : {{ sortie.campus.nom }}<br>
+                Lieu : {{ sortie.lieu.rue }}, {{ sortie.lieu.ville.codePostal }} {{ sortie.lieu.ville.nom }}<br>
+                <form method="post">
+                    <label>Motif de la suppression</label><br>
+                    <textarea name="textarea"></textarea><br>
+                    <button class="btn btn-danger" type="submit" value="supprimer-sortie" name="supprimer">Supprimer cette sortie</button>
+                    <a class="btn btn-warning" href="{{ path('sortie') }}">Annuler</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}
+            {% block title %}
+                {{ parent() }} | Supprimer une sortie
+            {% endblock %}

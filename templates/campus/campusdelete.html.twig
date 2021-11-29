@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+
+    <h3>Êtes-vous sûr de vouloir supprimer le campus : "{{ campus.nom }}" ?</h3>
+    <form>
+    <button type="submit" class="btn btn-success" name="suppression-campus-definitive">Supprimer définitivement ce campus</button>
+    <a type="submit" href="{{ path('campus') }}" class="btn btn-danger">Non ! Je me suis égaré·e</a>
+    </form>
+{% endblock %}
+{% block title %}
+    {{ parent() }} | Campus Suppression
+{% endblock %}

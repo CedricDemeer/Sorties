@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+{% block main %}
+
+
+    <table class="table">
+        <TR>
+            <TH scope="col">Email</TH>
+            <TH scope="col">Nom</TH>
+            <TH scope="col">Prenom</TH>
+            <TH scope="col">pseudo</TH>
+            <TH scope="col">Administrateur</TH>
+            <TH scope="col">Actif</TH>
+            <TH scope="col">Campus</TH>
+        </TR>
+        {% for user in users %}
+            <TR>
+                <TD>  {{ user.email }}</TD>
+                <TD> {{ user.nom }} </TD>
+                <TD> {{ user.Prenom }} </TD>
+                <TD> <a href="{{ path('user_profil', {'id':user.id}) }}">{{ user.pseudo }}</a> </TD>
+                <TD> <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault"
+                            {% if user.administrateur %}
+                               checked
+                            {% endif %} >
+                    </div>
+                </TD>
+                <TD> <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault"
+                                {% if user.actif %}
+                                    checked
+                                {% endif %} >
+                    </div>
+                </TD>
+                <TD> {{ user.campus.nom }}</TD>
+
+            </TR>
+
+        {% endfor %}
+    </table>
+
+    <a class="btn btn-primary" href="{{ path('admin_create_user') }}">Ajouter un utilisateur</a>
+{% endblock %}
+{% block title %}
+    {{ parent() }} | Toutes les utilisateurs
+{% endblock %}
+{% block script %}
+    <script>
+
+    let url='/admin/setadmin/'userid;
+    document.querySelector("#flexSwitchCheckDefault").addEventListener('change',function (){
+
+    let array=document.getElementById('tbody1');
+    jsondata=JSON.stringify(this.value)
+
+    fetch(url,
+    {
+    method:"POST",
+    body:jsondata
+    })
+    .then(response=>response.json())
+    .then(response=>{
+
+
+    for (let responseKey in response) {
+
+    let nom=response[responseKey].nom;
+    console.log(response[responseKey].nom);
+    document.body.onload=addligne(nom);
+    test=this.value;
+    }
+
+    })
+
+    })
+    </script>
+{% endblock %}

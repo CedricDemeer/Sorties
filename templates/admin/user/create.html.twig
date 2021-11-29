@@ -1,0 +1,30 @@
+{% extends 'base.html.twig'%}
+{% block title %}
+    Profil | {{ parent() }}
+{% endblock %}
+{% block main %}
+
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col">
+
+            </div>
+            <div class="col">
+                <h1>Inscrire un Utilisateur</h1>
+                {{ form_start(Formulaire) }}
+                {{ form_widget(Formulaire) }}
+                <button class="btn btn-primary" type="submit">Envoyer</button>
+                {{ form_end(Formulaire) }}
+
+            </div>
+            <div class="col">
+
+            </div>
+        </div>
+
+
+    </div>
+
+
+
+{% endblock %}

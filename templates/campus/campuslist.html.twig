@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+
+        <h1>Gérer les campus</h1>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Campus</th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody id="tbody1">
+            {% for campu in campus  %}
+                <TR>
+                <TH scope="row"> {{ campu.nom }} </TH>
+                <TD><a href="{{ path('campus_modif', {'id':campu.id}) }}">Modifier</a> | <a href="{{ path('campus_supp', {'id':campu.id}) }}">Supprimer</a></TD>
+                </TR>
+            {% endfor %}
+            <TR><form>
+                <TD><input type="text" name="nom-nouveau-campus"></TD>
+                <TD><button type="submit" name="nouveau-campus">Ajouter</button></TD>
+                </form>
+            </TR>
+            </tbody>
+        </table>
+
+
+{% endblock %}
+{% block title %}
+    {{ parent() }} | Campus
+{% endblock %}

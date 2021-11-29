@@ -1,0 +1,25 @@
+BEGIN
+
+DECLARE done int DEFAULT 0;
+DECLARE idcursor int;
+DECLARE db_cursor CURSOR FOR
+SELECT id
+FROM sortie
+WHERE now()> DATE_ADD(date_heure_debut, INTERVAL 30 DAY);
+DECLARE CONTINUE HANDLER FOR NOT FOUND SET done=1;
+
+OPEN db_cursor;
+db_cursor_loop:loop
+FETCH db_cursor into idcursor;
+IF done=1 THEN
+LEAVE db_cursor_loop;
+END IF;
+UPDATE sortie SET
+statut_id=4
+where id=idcursor;
+
+END LOOP db_cursor_loop;
+CLOSE db_cursor;
+
+
+END

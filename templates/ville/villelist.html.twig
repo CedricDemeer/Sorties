@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block main %}
+
+    <div class="example-wrapper">
+        <h1>Gérer les villes</h1>
+
+
+
+            <label for="ville">Ville : </label>
+            <input type="text" name="ville" id="ville"/>
+
+
+
+
+        <table class="fixed_header">
+            <thead>
+            <tr>
+                <th> nom</th>
+                <th> code postal</th>
+                <th> action</th>
+            </tr>
+            </thead>
+            <tbody  id="tbody1">
+
+
+
+            </tbody>
+        </table>
+    </div>
+    </div>
+
+{% endblock %}
+{% block script %}<script src={{ asset('js/Ville.js') }}></script>{% endblock %}
+{% block title %}
+    {{ parent() }} | les villes
+{% endblock %}

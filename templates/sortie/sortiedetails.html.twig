@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+{% block main %}
+    <h1 class="display-3">{{ sortie.nom }}</h1>
+    <h3 class="text-muted">{{ sortie.lieu.nom }} | {{ sortie.lieu.rue }}, {{ sortie.lieu.ville.codePostal }} {{ sortie.lieu.ville.nom }}</h3>
+    <h4>{{ sortie.dateHeureDebut | date("d/m/Y H:m:s") }}</h4>
+    <p>{{ sortie.description }}</p>
+    <br>
+
+    {% if sortie.users is not empty %}
+        <h4>Liste des participants inscrits :</h4>
+
+        <table class="table">
+            <TR>
+                <TH scope="col">Pseudo</TH>
+                <TH scope="col">Nom</TH>
+            </TR>
+            {% for user in sortie.users %}
+                <TR>
+                    <TH scope="row"> {{ user.pseudo }} </TH>
+                    <TD> <a href="{{ path('user_profil', {'id':user.id}) }}">{{ user.nom | upper }} {{ user.prenom }} </a> </TD>
+                </TR>
+            {% endfor %}
+        </table>
+        {% else %}
+        <p>Il n'y a pas encore d'inscrits pour cette activité !</p>
+    {% endif %}
+{% endblock %}
+{% block title %}
+    {{ parent() }} | {{ sortie.nom }}
+{% endblock %}

@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% include('inc/stylesheet.html.twig') %}
+    <title>{% block title %}Sorties{% endblock %}</title>
+</head>
+<body>
+<div class="container  app-content">
+    <header>
+        {% include('inc/nav.html.twig') %}
+    </header>
+    <br>
+     {#  Ici il s'agit de l'ajout de message flash (pour signaler que quelque chose
+        c'est bien passé pour non. On le met dans le layout pour être sûr que ça s'affichera
+        sur n'importe quelle page #}
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="app-flash app-flash-{{ label }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+    <div id="page-container">
+        <div id="main-container app-content-inside">
+            {% block main %}{% endblock %}
+        </div>
+        <footer id="footer" class="app-footer">
+        {# <footer id="footer" class="bg-light text-center text-lg-start "> #}
+            &copy;{{ "now" | date("Y") }} - Sorties.fr <br>
+        </footer>
+    </div>
+</div>
+<script src="../js/main.js"></script>
+{% block script %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,82 @@
+
+.fixed_header{
+    width: 500px;
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+.fixed_header tbody{
+    display: block;
+    width: 100%;
+    overflow: auto;
+    height:200px;
+}
+
+.fixed_header thead tr{
+
+    display: block;
+
+}
+.fixed_header thead{
+    background-color: grey;
+    color: #FFFFFF;
+}
+.fixed_header th, .fixed_header td{
+    padding-left: 5px;
+    text-align: left;
+    width:200px;
+
+}
+
+.presentation-accueil {
+    text-align: right;
+}
+
+.app-spoiler {
+    display: none;
+}
+
+
+
+
+
+.app-content {
+    position: relative;
+    min-height: 95vh;
+}
+
+.app-content-inside {
+    padding-bottom: 5rem;
+    margin-top: 100px;
+    margin-left: 40px;
+    margin-right: 50px;
+}
+
+.app-footer {
+    position:absolute;
+    bottom:-2rem;
+    width:100%;
+    padding-top:5px;
+    margin-left: -12px;
+    height: 2rem;
+    text-align: center;
+}
+
+.app-flash {
+    padding : 20px;
+    border-radius: 1em;
+    display : block;
+    font-family: Caladea, sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    width : 100%;
+}
+
+.app-flash-success {
+    background-color: darkseagreen;
+    color: darkgreen;
+}
+
+.app-flash-error {
+    background-color: indianred;
+    color: darkred;
+}

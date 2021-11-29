@@ -1,0 +1,144 @@
+{% extends 'base.html.twig' %}
+{% block main %}
+        <div class="presentation-accueil">
+            <h5> Bonjour, {{ app.user.pseudo }}</h5>
+            <h6>{{ "now" | date("d/m/Y") }}</h6>
+        </div>
+
+    <fieldset>
+        <legend>Filtrer les sorties</legend>
+    {{ form_start(filtreSortieForm) }}
+    <div class="form-row">
+        <div class="form-group row">
+            <div class="col-sm-6">
+                {{ form_row(filtreSortieForm.campus) }}
+            </div>
+            <div class="col-sm-6">
+                {{ form_row(filtreSortieForm.categorie) }}
+            </div>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group row">
+            <div class="col-sm-4">
+                {{ form_row(filtreSortieForm.champSaisie) }}
+            </div>
+            <div class="col-md-2">
+                {{ form_row(filtreSortieForm.dateintervalmin) }}
+            </div>
+            <div class="col-md-2">
+                {{ form_row(filtreSortieForm.dateintervalmax) }}
+            </div>
+            <div class="col-md-4">
+                    {{ form_row(filtreSortieForm.sortieInscrit) }}
+                    {{ form_row(filtreSortieForm.sortieNonInscrit) }}
+                    {{ form_row(filtreSortieForm.sortieOrga) }}
+                    {{ form_row(filtreSortieForm.sortiePassee) }}
+            </div>
+        </div>
+    </div>
+    <button class="btn btn-primary" type="submit">Rechercher</button>
+
+    {{ form_end(filtreSortieForm) }}
+
+    </fieldset><br>
+    <table class="table">
+        <TR>
+            <TH scope="col">Nom de la sortie</TH>
+            <TH scope="col">Date de la sortie</TH>
+            <TH scope="col">Clotûre inscription</TH>
+            <TH scope="col">Inscription/Nbr de places</TH>
+            <TH scope="col">Etat</TH>
+            <TH scope="col">Inscrit</TH>
+            <TH scope="col">Organisateur</TH>
+            <TH scope="col">Actions</TH>
+        </TR>
+        {% for sortie in sorties %}
+            <TR>
+                <TH scope="row"> {{ sortie.nom }} </TH>
+                <TD> {{ sortie.dateHeureDebut | date("d/m/Y H:i:s") }} </TD>
+                <TD> {{ sortie.dateLimiteInscription | date("d/m/Y") }} </TD>
+                <TD> {% if (sortie.users | length) == sortie.nbInscriptionMax %}
+                        Complet !
+                    {% endif %}
+                    {{ sortie.users | length }} / {{ sortie.nbInscriptionMax }}
+                </TD>
+                <TD> {{ sortie.statut.libelle }} </TD>
+                <TD> {% for user in sortie.users %}
+                        {% if app.user == user %}
+                            X
+                        {% endif %}
+                    {% endfor %}</TD>
+                <TD> {% if app.user == sortie.organisateur %}
+                        <a href="{{ path('user_monprofil') }}">{{ sortie.organisateur.pseudo }}</a>
+                        {% else %}
+                            <a href="{{ path('user_profil', {'id':sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</a>
+                    {% endif %}</TD>
+                <TD>
+                    {# Cas 'Inscription en Cours' #}
+                    {% if sortie.statut.id == '1' %}
+                        <a href="{{ path('sortie_details', {'id':sortie.id}) }}">Afficher</a>
+                        {% if app.user == sortie.organisateur %}
+                            | <a href="{{ path('sortie_modification', {'id':sortie.id}) }}">Modifier</a>
+                        {% endif %}
+
+                        {% set affichageInscription = false %}
+                        {% set affichageDesinscription = false %}
+
+                        {% for user in sortie.users %}
+                            {% if app.user == user %}
+                                | <a href="{{ path('sortie_desinscrire',{'id':sortie.id}) }}">Se désinscrire</a>
+                                {% set affichageDesinscription = true %}
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if affichageDesinscription == false and affichageInscription == false %}
+                            | <a href="{{ path('sortie_sinscrire',{'id':sortie.id}) }}">S'inscrire</a>
+                        {% endif %}
+
+                    {% endif %}
+
+                    {# Cas 'Inscription Terminée' #}
+                    {% if sortie.statut.id == '2' %}
+                        <a href="{{ path('sortie_details', {'id':sortie.id}) }}">Afficher</a>
+                    {% endif %}
+
+                    {# Cas 'Sortie Annulée' #}
+                    {% if sortie.statut.id == '3' %}
+                        {{ sortie.statut.libelle }}
+                    {% endif %}
+
+                    {# Cas 'Sortie Archivée' #}
+                    {% if sortie.statut.id == '4' %}
+                        {{ sortie.statut.libelle }}
+                    {% endif %}
+
+                    {# Cas 'Sortie Passée' #}
+                    {% if sortie.statut.id == '5' %}
+                        {{ sortie.statut.libelle }}
+                    {% endif %}
+                    {# Cas 'Sortie Créée' #}
+                    {% if sortie.statut.id == '6' %}
+                        {{ sortie.statut.libelle }}
+                        {% if app.user == sortie.organisateur %}
+                            <a href="{{ path('sortie_modification', {'id':sortie.id}) }}">Modifier</a>
+                        {% endif %}
+                    {% endif %}
+                    {# Cas 'Sortie En Cours' #}
+                    {% if sortie.statut.id == '7' %}
+                        {{ sortie.statut.libelle }}
+                    {% endif %}
+
+                </TD>
+            </TR>
+
+        {% endfor %}
+    </table>
+    {% if app.user.actif == 1 %}
+    <a class="btn btn-primary" href="{{ path('sortie_ajout') }}">Ajouter une nouvelle sortie</a>
+    {% endif %}
+{% endblock %}
+{% block title %}
+    {{ parent() }} | Toutes les sorties
+{% endblock %}

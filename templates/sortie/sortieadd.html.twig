@@ -1,0 +1,33 @@
+{% extends 'base.html.twig'%}
+{% block main %}
+    <div class="container">
+        <h1>Ajouter une nouvelle sortie</h1>
+        <div class="row align-items-center">
+            <div class="col">
+
+                {{ form_start(sortieForm) }}
+                {{ form_widget(sortieForm) }}
+                <br>
+                <button class="btn btn-primary" type="submit" name="save">Enregistrer</button>
+                <button class="btn btn-success" type="submit" name="publication">Publier cette sortie</button>
+                {{ form_end(sortieForm) }}
+                <button class="btn btn-warning" type="button" id="app-btn" onclick="handleClickSpoiler()">
+                    Vous voulez ajouter un lieu ?</button>
+                <div id="js-form-spoiler" class ="app-spoiler">
+                    {{ form_start(lieuForm) }}
+                    {{ form_widget(lieuForm) }}
+                    <button class="btn btn-primary" type="submit">Ajouter ce lieu</button>
+                    {{ form_end(lieuForm) }}
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}
+            {% block title %}
+                {{ parent() }} | Ajouter une sortie
+            {% endblock %}
